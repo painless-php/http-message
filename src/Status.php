@@ -15,7 +15,7 @@ class Status
         private int $code,
         private string $name,
         private string $description,
-        private bool $shouldRetry,
+        private bool $shouldRetry = false,
         private ?string $standard = null
     )
     {
@@ -63,7 +63,7 @@ class Status
             'name' => $this->name,
             'description' => $this->description,
             'standard' => $this->standard,
-            'should_retry' => $this->shouldRetry,
+            'shouldRetry' => $this->shouldRetry,
         ];
     }
 }
