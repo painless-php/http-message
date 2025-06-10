@@ -44,6 +44,8 @@ class Header
      */
     public function getValues() : array
     {
-        return $this->values;
+        return is_array($this->values)
+            ? $this->values
+            : array_map('trim', explode(',', $this->values));
     }
 }

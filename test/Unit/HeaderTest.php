@@ -23,5 +23,12 @@ class HeaderTest extends TestCase
     public function testToStringReturnsCommaDelimitedHeaderString()
     {
         $header = new Header('name', ['foo', 'bar', 'baz']);
-        $this->assertSame('name:foo, bar, baz', $header->__toString()); }
+        $this->assertSame('name:foo, bar, baz', $header->__toString());
+    }
+
+    public function testGetHeadersTrimsSpaceBetweenValues()
+    {
+        $header = new Header('name', 'foo, bar, baz');
+        $this->assertSame(['foo', 'bar', 'baz'], $header->getValues());
+    }
 }
