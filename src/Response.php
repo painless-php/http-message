@@ -44,7 +44,7 @@ class Response extends Message implements ResponseInterface
 
         $instance->setStatus(Status::createFromArray([
             ...$status->toArray(),
-            'name' => $phrase
+            'reasonPhrase' => $phrase
         ]));
 
         return $instance;

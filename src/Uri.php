@@ -3,7 +3,7 @@
 namespace PainlessPHP\Http\Message;
 
 use PainlessPHP\Http\Message\Concern\DeepCloneTrait;
-use PainlessPHP\Http\Message\ParsedUri;
+use PainlessPHP\Http\Message\Internal\ParsedUri;
 use Psr\Http\Message\UriInterface;
 
 class Uri implements UriInterface

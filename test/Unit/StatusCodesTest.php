@@ -11,7 +11,7 @@ class StatusCodesTest extends TestCase
     {
         $expected = [
             'code' => 200,
-            'name' => 'OK',
+            'reasonPhrase' => 'OK',
             'description' => 'The request has succeeded',
             'standard' => null,
             'shouldRetry' => false
@@ -23,7 +23,7 @@ class StatusCodesTest extends TestCase
     {
         $expected = [
             'code' => 123,
-            'name' => 'Unknown',
+            'reasonPhrase' => 'Unknown',
             'description' => 'No description could be found for this status code',
             'standard' => null,
             'shouldRetry' => false

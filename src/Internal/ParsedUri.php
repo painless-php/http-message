@@ -1,6 +1,6 @@
 <?php
 
-namespace PainlessPHP\Http\Message;
+namespace PainlessPHP\Http\Message\Internal;
 
 use InvalidArgumentException;
 use PainlessPHP\Http\Message\Exception\StringParsingException;

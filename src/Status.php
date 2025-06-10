@@ -13,7 +13,7 @@ class Status
 
     public function __construct(
         private int $code,
-        private string $name,
+        private string $reasonPhrase,
         private string $description,
         private bool $shouldRetry = false,
         private ?string $standard = null
@@ -23,7 +23,7 @@ class Status
 
     public function __toString() : string
     {
-        return "$this->code $this->name";
+        return "$this->code $this->reasonPhrase";
     }
 
     public function getCode() : int
@@ -31,14 +31,9 @@ class Status
         return $this->code;
     }
 
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
     public function getReasonPhrase() : string
     {
-        return $this->name;
+        return $this->reasonPhrase;
     }
 
     public function getDescription() : string
@@ -60,7 +55,7 @@ class Status
     {
         return [
             'code' => $this->code,
-            'name' => $this->name,
+            'reasonPhrase' => $this->reasonPhrase,
             'description' => $this->description,
             'standard' => $this->standard,
             'shouldRetry' => $this->shouldRetry,
