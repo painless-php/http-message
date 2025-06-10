@@ -15,7 +15,7 @@ class Header
      * Parse a header line into a header object
      *
      */
-    public static function createFromHeaderLine(string $header) : self
+    public static function createFromHeaderString(string $header) : self
     {
         $parts = explode(':', $header, 2);
         return new self(trim($parts[0]), trim($parts[1] ?? ''));

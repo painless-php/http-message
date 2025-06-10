@@ -22,3 +22,5 @@ parameters:
     # editorUrl: 'vscode://file/%%relFile%%:%%line%%' # Visual Studio Code
     # editorUrl: 'phpstorm://open?file=%%relFile%%&line=%%line%%' # PhpStorm
     # editorUrl: 'atom://core/open/file?filename=%%relFile%%&line=%%line%%' # Atom
+
+    treatPhpDocTypesAsCertain: false

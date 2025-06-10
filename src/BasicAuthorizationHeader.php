@@ -48,9 +48,9 @@ class BasicAuthorizationHeader extends Header
      *
      */
     #[Override]
-    public static function createFromHeaderLine(string $header): BasicAuthorizationHeader
+    public static function createFromHeaderString(string $header): BasicAuthorizationHeader
     {
-        $parsed = parent::createFromHeaderLine($header);
+        $parsed = parent::createFromHeaderString($header);
         return self::createFromHeaderValue($parsed->getValue());
     }
 

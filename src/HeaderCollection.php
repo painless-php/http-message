@@ -75,6 +75,51 @@ class HeaderCollection
     }
 
     /**
+     * Create a new header collection that contains the given header in
+     * addition to the old headers. Will override existing header.
+     *
+     */
+    public function withHeader(Header $header) : self
+    {
+        return new self([...$this->headers, strtolower($header->getName()) => $header]);
+    }
+
+    /**
+     * Create a new header collection that contains the given header in
+     * addition to the old headers. Values of the given header will be
+     * added to the existing header.
+     *
+     */
+    public function withAddedHeader(Header $header)
+    {
+        $oldHeader = $this->getHeader($header->getName());
+
+        if($oldHeader === null) {
+            return $this->withHeader($header);
+        }
+
+        // Merge the values from existing header
+        $newHeader = new Header($header->getName(), [
+            ...$oldHeader->getValues(),
+            ...$header->getValues()
+        ]);
+
+        return $this->withHeader($newHeader);
+    }
+
+    /**
+     * Create a new header collection based on the old headers that does
+     * not contain the header with the given name.
+     *
+     */
+    public function withoutHeader(string $name) : self
+    {
+        $headers = $this->headers;
+        unset($headers[$name]);
+        return new self($headers);
+    }
+
+    /**
      * Get array with all key-value pairs of headers as specified by
      * psr-7 MessageInterface specification getHeaders()
      *
