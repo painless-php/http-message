@@ -17,7 +17,6 @@ class Message implements MessageInterface
 
     protected Body $body;
     protected HeaderCollection $headers;
-    protected string $version;
 
     /**
      * @param Body|StreamInterface|resource|string|null $body Source of the body.
@@ -29,11 +28,14 @@ class Message implements MessageInterface
      * @param HeaderCollection|array|null $headers Message headers
      *
      */
-    public function __construct(mixed $body = null, HeaderCollection|array|null $headers = null)
+    public function __construct(
+        mixed $body = null,
+        HeaderCollection|array|null $headers = null,
+        private string $version = '1.1'
+    )
     {
         $this->setBody($body);
         $this->setHeaders($headers);
-        $this->version = '1.1';
     }
 
     protected function setBody(mixed $body)
@@ -61,7 +63,7 @@ class Message implements MessageInterface
         return $this->version;
     }
 
-    public function withProtocolVersion($version) : self
+    public function withProtocolVersion(string $version) : self
     {
         $instance = $this->clone();
         $instance->version = $version;
@@ -74,12 +76,12 @@ class Message implements MessageInterface
         return $this->headers->toArray();
     }
 
-    public function hasHeader($name) : bool
+    public function hasHeader(string $name) : bool
     {
         return $this->headers->hasHeader($name);
     }
 
-    public function getHeader($name) : array
+    public function getHeader(string $name) : array
     {
         $header = $this->headers->getHeader($name);
 
@@ -90,7 +92,7 @@ class Message implements MessageInterface
         return $header->getValues();
     }
 
-    public function getHeaderLine($name) : string
+    public function getHeaderLine(string $name) : string
     {
         return $this->headers->getHeaderLine($name);
     }
