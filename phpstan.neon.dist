@@ -23,4 +23,5 @@ parameters:
     # editorUrl: 'phpstorm://open?file=%%relFile%%&line=%%line%%' # PhpStorm
     # editorUrl: 'atom://core/open/file?filename=%%relFile%%&line=%%line%%' # Atom
 
+    # Do not assume that the user will always follow phpdoc typings
     treatPhpDocTypesAsCertain: false

@@ -41,7 +41,7 @@ class MessageTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->message->getHeaders());
+        $this->assertSame($expected, $this->message->getHeaders());
     }
 
     public function testHasHeaderReturnsTrueForExistingHeader()
@@ -61,58 +61,58 @@ class MessageTest extends TestCase
 
     public function testGetHeaderReturnsHeaderValuesArray()
     {
-        $this->assertEquals(['foo', 'bar'], $this->message->getHeader('header1'));
+        $this->assertSame(['foo', 'bar'], $this->message->getHeader('header1'));
     }
 
     public function testGetHeaderIsCaseInsensitive()
     {
-        $this->assertEquals(['foo', 'bar'], $this->message->getHeader('Header1'));
+        $this->assertSame(['foo', 'bar'], $this->message->getHeader('Header1'));
     }
 
     public function getHeaderLineReturnsHeaderValuesAsConcatenatedString()
     {
-        $this->assertEquals('foo, bar', $this->message->getHeaderLine('header1'));
+        $this->assertSame('foo, bar', $this->message->getHeaderLine('header1'));
     }
 
     public function testGetHeaderLinesIsCaseInsensitive()
     {
-        $this->assertEquals('foo, bar', $this->message->getHeaderLine('Header1'));
+        $this->assertSame('foo, bar', $this->message->getHeaderLine('Header1'));
     }
 
     public function testWithHeaderReturnsInstanceWithReplacedHeader()
     {
         $message = $this->message->withHeader('header1', 'test');
-        $this->assertEquals('test', $message->getHeaderLine('header1'));
+        $this->assertSame('test', $message->getHeaderLine('header1'));
     }
 
     public function testWithHeaderDoesNotModifyOriginalMessageHeaders()
     {
         $this->message->withHeader('header1', 'test');
-        $this->assertEquals('foo, bar', $this->message->getHeaderLine('header1'));
+        $this->assertSame('foo, bar', $this->message->getHeaderLine('header1'));
     }
 
     public function testWithAddedHeaderReturnsInstanceWithAppendedHeaderValue()
     {
         $message = $this->message->withAddedHeader('header1', 'baz');
-        $this->assertEquals(['foo', 'bar', 'baz'], $message->getHeader('header1'));
+        $this->assertSame(['foo', 'bar', 'baz'], $message->getHeader('header1'));
     }
 
     public function testWithAddedHeaderDoesNotModifyOriginalMessageHeaders()
     {
         $this->message->withAddedHeader('header1', 'baz');
-        $this->assertEquals('foo, bar', $this->message->getHeaderLine('header1'));
+        $this->assertSame('foo, bar', $this->message->getHeaderLine('header1'));
     }
 
     public function testWithoutHeaderRemovesHeader()
     {
         $message = $this->message->withoutHeader('header2');
-        $this->assertEquals(['header1'], array_keys($message->getHeaders()));
+        $this->assertSame(['header1'], array_keys($message->getHeaders()));
     }
 
     public function testWithoutHeaderDoesNotModifyOriginalMessageHeaders()
     {
         $this->message->withoutHeader('header2');
-        $this->assertEquals(['header1', 'header2'], array_keys($this->message->getHeaders()));
+        $this->assertSame(['header1', 'header2'], array_keys($this->message->getHeaders()));
     }
 
     public function testGetBodyReturnsStreamInterface()
@@ -137,21 +137,21 @@ class MessageTest extends TestCase
     public function testWithJsonSetsContentTypeHeader()
     {
         $message = $this->message->withJson(['foo' => 'bar']);
-        $this->assertEquals('application/json', $message->getHeaderLine('content-type'));
+        $this->assertSame('application/json', $message->getHeaderLine('content-type'));
     }
 
     public function testWithJsonSetsEncodedBodyContent()
     {
         $content = ['foo' => 'bar'];
         $message = $this->message->withJson($content);
-        $this->assertEquals(json_encode($content), (string)$message->getBody());
+        $this->assertSame(json_encode($content), (string)$message->getBody());
     }
 
     public function testWithJsonDoesNotModifyOriginalMessageBody()
     {
         $content = ['foo' => 'bar'];
         $this->message->withJson($content);
-        $this->assertEquals("test\n", (string)$this->message->getBody());
+        $this->assertSame("test\n", (string)$this->message->getBody());
     }
 
     public function testWithJsonDoesNotModifyOriginalMessageHeaders()
@@ -166,8 +166,8 @@ class MessageTest extends TestCase
         $message = $this->message->withBasicAuth('foo', 'bar');
         $header = BasicAuthorizationHeader::createFromHeaderValue($message->getHeaderLine('Authorization'));
 
-        $this->assertEquals('foo', $header->getUser());
-        $this->assertEquals('bar', $header->getPassword());
+        $this->assertSame('foo', $header->getUser());
+        $this->assertSame('bar', $header->getPassword());
     }
 
     public function testWithBasicAuthDoesNotModifyOriginalMessageHeaders()
