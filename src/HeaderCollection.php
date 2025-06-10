@@ -16,12 +16,18 @@ class HeaderCollection
     /**
      * Create header collection from an array
      *
+     * @param array<string,string|array<string>|Header> $array
+     *
      */
     public static function createFromArray(array $array) : self
     {
         $headers = [];
 
         foreach($array as $name => $values) {
+            if($values instanceof Header) {
+                $headers[strtolower($values->getName())] = $values;
+                continue;
+            }
             if(is_string($values) || is_array($values)) {
                 $headers[strtolower($name)] = new Header($name, $values);
                 continue;
