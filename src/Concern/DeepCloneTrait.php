@@ -6,7 +6,7 @@ use DeepCopy\DeepCopy;
 
 trait DeepCloneTrait
 {
-    public function clone()
+    protected function clone()
     {
         $copier = new DeepCopy();
         $copier->skipUncloneable();
