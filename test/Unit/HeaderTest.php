@@ -31,4 +31,11 @@ class HeaderTest extends TestCase
         $header = new Header('name', 'foo, bar, baz');
         $this->assertSame(['foo', 'bar', 'baz'], $header->getValues());
     }
+
+    public function testCreateFromHeaderLineParsesHeaderCorrectly()
+    {
+        $header = Header::createFromHeaderLine('Content-Type: text/html, application/json');
+        $this->assertSame('Content-Type', $header->getName());
+        $this->assertSame(['text/html', 'application/json'], $header->getValues());
+    }
 }

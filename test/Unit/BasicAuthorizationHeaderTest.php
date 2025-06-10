@@ -45,19 +45,19 @@ class BasicAuthorizationHeaderTest extends TestCase
         $this->assertSame('bar:baz', $header->getPassword());
     }
 
-    public function testFromStringDecodesHeaderCorrectly()
+    public function testCreateFromHeaderLineDecodesHeaderCorrectly()
     {
-        $value = 'Basic ' . base64_encode('foo:bar');
-        $header = BasicAuthorizationHeader::createFromString($value);
+        $value = 'Authorization: Basic ' . base64_encode('foo:bar');
+        $header = BasicAuthorizationHeader::createFromHeaderLine($value);
 
         $this->assertSame('foo', $header->getUser());
         $this->assertSame('bar', $header->getPassword());
     }
 
-    public function testFromStringThrowsExceptionForNonBasicAuthHeader()
+    public function testCreateFromHeaderLineThrowsExceptionForNonBasicAuthHeader()
     {
         $value = 'foo';
         $this->expectExceptionMessage("Given header value should start with 'Basic '");
-         BasicAuthorizationHeader::createFromString($value);
+         BasicAuthorizationHeader::createFromHeaderLine($value);
     }
 }

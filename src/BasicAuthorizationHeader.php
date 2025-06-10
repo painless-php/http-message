@@ -3,6 +3,7 @@
 namespace PainlessPHP\Http\Message;
 
 use InvalidArgumentException;
+use Override;
 use PainlessPHP\Http\Message\Exception\StringParsingException;
 use PainlessPHP\Http\Message\Internal\Arr;
 
@@ -43,10 +44,21 @@ class BasicAuthorizationHeader extends Header
     }
 
     /**
+     *  Create a basic authorization header from a header line
+     *
+     */
+    #[Override]
+    public static function createFromHeaderLine(string $header): BasicAuthorizationHeader
+    {
+        $parsed = parent::createFromHeaderLine($header);
+        return self::createFromHeaderValue($parsed->getValue());
+    }
+
+    /**
      * Decode a given header value into basic auth header object
      *
      */
-    public static function createFromString(string $value) : self
+    public static function createFromHeaderValue(string $value) : self
     {
         $value = trim($value);
 
@@ -55,11 +67,16 @@ class BasicAuthorizationHeader extends Header
             throw new StringParsingException($msg);
         }
 
+        // Get the part after 'Basic'
         $credentials = explode(' ', $value, 2)[1];
+
+        // Decode credentials
         $credentials = base64_decode($credentials);
+
+        // Split credentials to username and password
         $credentials = explode(':', $credentials, 2);
 
-        return new self($credentials[0] ?? '', $credentials[1] ?? '');
+        return new self($credentials[0], $credentials[1] ?? '');
     }
 
     /**

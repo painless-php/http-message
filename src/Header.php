@@ -11,6 +11,16 @@ class Header
     {
     }
 
+    /**
+     * Parse a header line into a header object
+     *
+     */
+    public static function createFromHeaderLine(string $header) : self
+    {
+        $parts = explode(':', $header, 2);
+        return new self(trim($parts[0]), trim($parts[1] ?? ''));
+    }
+
     public function __toString()
     {
         return "$this->name:{$this->getValue()}";
