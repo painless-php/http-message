@@ -30,7 +30,7 @@ class Message implements MessageInterface
      */
     public function __construct(
         mixed $body = null,
-        HeaderCollection|array|null $headers = null,
+        HeaderCollection|array $headers = [],
         private string $version = '1.1'
     )
     {
@@ -47,11 +47,8 @@ class Message implements MessageInterface
         $this->body = $body;
     }
 
-    protected function setHeaders(HeaderCollection|array|null $headers)
+    protected function setHeaders(HeaderCollection|array $headers)
     {
-        if($headers === null) {
-            $headers = new HeaderCollection([]);
-        }
         if(is_array($headers)) {
             $headers = HeaderCollection::createFromArray($headers);
         }
@@ -63,7 +60,7 @@ class Message implements MessageInterface
         return $this->version;
     }
 
-    public function withProtocolVersion(string $version) : self
+    public function withProtocolVersion(string $version) : static
     {
         $instance = $this->clone();
         $instance->version = $version;
@@ -97,21 +94,21 @@ class Message implements MessageInterface
         return $this->headers->getHeaderLine($name);
     }
 
-    public function withHeader(string $name, mixed $value) : self
+    public function withHeader(string $name, mixed $value) : static
     {
         $instance = $this->clone();
         $instance->headers = $this->headers->withHeader(new Header($name, $value));
         return $instance;
     }
 
-    public function withAddedHeader(string $name, mixed $value) : self
+    public function withAddedHeader(string $name, mixed $value) : static
     {
         $instance = $this->clone();
         $instance->headers = $this->headers->withAddedHeader(new Header($name, $value));
         return $instance;
     }
 
-    public function withoutHeader(string $name) : self
+    public function withoutHeader(string $name) : static
     {
         $instance = $this->clone();
         $instance->headers = $this->headers->withoutHeader($name);
@@ -123,7 +120,7 @@ class Message implements MessageInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body) : self
+    public function withBody(StreamInterface $body) : static
     {
         $instance = $this->clone();
         $instance->setBody($body);
@@ -135,7 +132,7 @@ class Message implements MessageInterface
      * Create a message instance with json body content and content-type header
      *
      */
-    public function withJson(mixed $data) : self
+    public function withJson(mixed $data) : static
     {
         $encoded = json_encode($data);
 
@@ -153,7 +150,7 @@ class Message implements MessageInterface
      * Create a message instance with basic authorization header
      *
      */
-    public function withBasicAuth(string $user, string $password) : self
+    public function withBasicAuth(string $user, string $password) : static
     {
         $instance = $this->clone();
         $instance->headers = $this->headers->withHeader(

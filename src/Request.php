@@ -21,7 +21,7 @@ class Request extends Message implements RequestInterface
         Method|string $method,
         Uri|UriInterface|string|null $uri = null,
         mixed $body = null,
-        HeaderCollection|array|null $headers = null
+        HeaderCollection|array $headers = []
     ) {
         parent::__construct($body, $headers);
         $this->setMethod($method);
@@ -95,7 +95,7 @@ class Request extends Message implements RequestInterface
         return $this->uri->getOriginForm();
     }
 
-    public function withRequestTarget(string $requestTarget) : self
+    public function withRequestTarget(string $requestTarget) : static
     {
         $instance = $this->clone();
         $instance->setRequestTarget($requestTarget);
@@ -107,7 +107,7 @@ class Request extends Message implements RequestInterface
         return $this->method->value;
     }
 
-    public function withMethod(Method|string $method) : self
+    public function withMethod(Method|string $method) : static
     {
         $instance = $this->clone();
         $instance->setMethod($method);
@@ -119,7 +119,7 @@ class Request extends Message implements RequestInterface
         return $this->uri;
     }
 
-    public function withUri(UriInterface $uri, bool $preserveHost = false) : self
+    public function withUri(UriInterface $uri, bool $preserveHost = false) : static
     {
         $instance = $this->clone();
         $instance->setUri((string)$uri);
@@ -148,7 +148,7 @@ class Request extends Message implements RequestInterface
      * content-type header will be added for x-www-form-urlencoded
      *
      */
-    public function withParameters(array $parameters) : self
+    public function withParameters(array $parameters) : static
     {
         $instance = $this->clone();
         $query = new Query($parameters);

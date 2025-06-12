@@ -11,7 +11,7 @@ class Response extends Message implements ResponseInterface
     public function __construct(
         Status|int $status = 200,
         mixed $body = null,
-        HeaderCollection|array|null $headers = null
+        HeaderCollection|array $headers = []
     ) {
         parent::__construct($body, $headers);
         $this->setStatus($status);
@@ -35,7 +35,7 @@ class Response extends Message implements ResponseInterface
         return $this->status->getCode();
     }
 
-    public function withStatus(int $code, string $reasonPhrase = '') : self
+    public function withStatus(int $code, string $reasonPhrase = '') : static
     {
         $instance = $this->clone();
 
