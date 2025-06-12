@@ -140,4 +140,10 @@ class BodyTest extends TestCase
 
         $this->assertEquals('foo', (string)$body);
     }
+
+    public function testBodyCanBeCreatedFromString()
+    {
+        $body = new Body('foo');
+        $this->assertSame('foo', $body->getContents());
+    }
 }

@@ -84,6 +84,7 @@ class Body implements StreamInterface
         if(is_string($source)) {
             $this->attach(null);
             $this->write($source);
+            $this->rewind();
             return;
         }
 
@@ -97,7 +98,7 @@ class Body implements StreamInterface
      * Not part of the actual psr-7 spec, thus only used privately
      *
      */
-    protected function attach($stream)
+    protected function attach(mixed $stream)
     {
         if($stream === null) {
             $this->stream = fopen('php://temp', 'r+');
